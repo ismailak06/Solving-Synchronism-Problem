@@ -14,10 +14,10 @@ namespace IntegrationSingleServer.Service
         private readonly ConnectionMultiplexer _redis;
         private readonly IDatabase _db;
 
-        public RedisService(ConnectionMultiplexer redis, IDatabase db)
+        public RedisService()
         {
-            _redis = redis;
-            _db = db;
+            _redis = ConnectionMultiplexer.Connect("localhost");
+            _db = _redis.GetDatabase();
         }
 
         public async Task<bool> AcquireLockAsync(KeyItem keyItem)
